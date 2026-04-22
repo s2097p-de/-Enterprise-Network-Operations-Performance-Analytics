@@ -1,0 +1,566 @@
+<div align="center">
+
+<img src="https://img.shields.io/badge/MySQL-NetworkDB-00C2E0?style=for-the-badge&logo=mysql&logoColor=white" />
+<img src="https://img.shields.io/badge/SQL-100+_Queries-0D1B2A?style=for-the-badge&logo=databricks&logoColor=00C2E0" />
+<img src="https://img.shields.io/badge/Tables-6_Core-117A65?style=for-the-badge" />
+<img src="https://img.shields.io/badge/KPIs-20+_Metrics-6A1B9A?style=for-the-badge" />
+<img src="https://img.shields.io/badge/License-MIT-E65100?style=for-the-badge" />
+
+<br/><br/>
+
+```
+███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗██████╗ ██████╗
+████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝██╔══██╗██╔══██╗
+██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ ██║  ██║██████╔╝
+██║╚██╗██║██╔══╝     ██║   ██║███╗██║██║   ██║██╔══██╗██╔═██╗ ██║  ██║██╔══██╗
+██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗██████╔╝██████╔╝
+╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═════╝
+```
+
+# 🌐 Enterprise Network Operations & Performance Analytics
+
+### *A comprehensive SQL-based analytical platform for real-time network monitoring, incident management, security analytics, and bandwidth optimization*
+
+<br/>
+
+[📊 View KPIs](#-kpi-metrics) · [🗃️ Schema](#️-database-schema) · [🔍 Queries](#-query-categories) · [🛡️ Security](#️-security--anomaly-detection) · [📂 Structure](#-project-structure)
+
+</div>
+
+---
+
+## 📌 Overview
+
+**NetworkDB** is a production-grade relational database system built in **MySQL** to monitor, analyze, and optimize enterprise network infrastructure. It provides structured data storage and a rich SQL analytics layer covering everything from basic reporting to advanced window function analytics and real-time security anomaly detection.
+
+```
+NetworkDB
+│
+├── 6 Normalized Tables         — Zone · Device · Employee · NetworkLog · Incident · BandwidthUsage
+├── 100+ Analytical Queries     — Across 5 complexity tiers
+├── 20+ KPI Metrics             — Performance · Reliability · Security · User Behavior
+└── 3 Network Zones             — Multi-zone monitoring with granular drill-down
+```
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 🖥️ **Device Monitoring** | Track CPU, memory, uptime, and connection health per device |
+| 📡 **Zone Analytics** | Latency, usage, and incident breakdown across 3 network zones |
+| 🔐 **Security Detection** | Night-time access, data spike anomalies, multi-device fraud patterns |
+| 📉 **Bandwidth Planning** | Daily/peak usage trends for capacity forecasting |
+| 👤 **User Behavior** | Per-employee data usage, VPN ratio, off-hours access detection |
+| ⏱️ **Incident SLA Tracking** | MTTR, MTBF, downtime duration, and severity classification |
+| 🪟 **Window Functions** | RANK, LAG/LEAD, NTILE, PERCENT_RANK, cumulative analytics |
+| 📊 **KPI Dashboards** | 20+ computed KPIs ready for BI tool integration |
+
+---
+
+## 🗃️ Database Schema
+
+```sql
+CREATE DATABASE NetworkDb;
+USE NetworkDb;
+```
+
+### Entity Relationship Diagram
+
+```
+                    ┌─────────────────┐
+                    │      ZONE       │
+                    │─────────────────│
+                    │ ZoneID (PK)     │
+                    │ ZoneName        │
+                    │ Location        │
+                    └────────┬────────┘
+                             │ 1:M              1:M
+              ┌──────────────┤          ┌─────────────────────┐
+              ▼              ▼          │   BANDWIDTH USAGE   │
+   ┌─────────────────┐                  │─────────────────────│
+   │     DEVICE      │                  │ UsageID (PK)        │
+   │─────────────────│                  │ ZoneID  (FK)        │
+   │ DeviceID (PK)   │                  │ Date                │
+   │ ZoneID   (FK) ──┘                  │ TotalUsageGB        │
+   │ DeviceType      │                  │ PeakUsageGB         │
+   │ IPAddress       │                  └─────────────────────┘
+   │ Status          │
+   │ CPU_Usage       │◄──────────────────────────────┐
+   │ Memory_Usage    │                               │
+   │ UptimeDays      │ 1:M                      1:M  │
+   └────────┬────────┘                               │
+            │                                        │
+    ┌───────┴────────┐              ┌────────────────┴───────┐
+    │   INCIDENT     │              │      NETWORKLOG        │
+    │────────────────│              │────────────────────────│
+    │ IncidentID(PK) │              │ LogID      (PK BIGINT) │
+    │ DeviceID  (FK) │              │ DeviceID   (FK)        │
+    │ IncidentType   │              │ EmployeeID (FK) ───────►──────────┐
+    │ StartTime      │              │ Timestamp              │          │
+    │ EndTime        │              │ DataUsageMB            │  ┌───────┴──────────┐
+    │ Severity       │              │ LatencyMS              │  │    EMPLOYEE      │
+    └────────────────┘              │ AccessType             │  │──────────────────│
+                                    │ Status                 │  │ EmployeeID (PK)  │
+                                    └────────────────────────┘  │ Name             │
+                                                                 │ Department       │
+                                                                 │ Role             │
+                                                                 │ AccessLevel      │
+                                                                 └──────────────────┘
+```
+
+### Table Reference
+
+<details>
+<summary><b>📋 Zone</b> — Network zone definitions</summary>
+
+```sql
+CREATE TABLE Zone (
+    ZoneID    INT PRIMARY KEY,
+    ZoneName  VARCHAR(50),   -- Zone A, B, C
+    Location  VARCHAR(100)
+);
+```
+</details>
+
+<details>
+<summary><b>📋 Device</b> — Network hardware inventory</summary>
+
+```sql
+CREATE TABLE Device (
+    DeviceID      INT PRIMARY KEY,
+    ZoneID        INT,
+    DeviceType    VARCHAR(50),   -- Router, Switch, Server
+    IPAddress     VARCHAR(20),
+    Status        VARCHAR(20),
+    CPU_Usage     INT,
+    Memory_Usage  INT,
+    UptimeDays    INT,
+    FOREIGN KEY (ZoneID) REFERENCES Zone(ZoneID)
+);
+```
+</details>
+
+<details>
+<summary><b>📋 Employee</b> — Staff access records</summary>
+
+```sql
+CREATE TABLE Employee (
+    EmployeeID  INT PRIMARY KEY,
+    Name        VARCHAR(100),
+    Department  VARCHAR(50),
+    Role        VARCHAR(50),
+    AccessLevel VARCHAR(10)
+);
+```
+</details>
+
+<details>
+<summary><b>📋 NetworkLog</b> — Activity log (high-volume)</summary>
+
+```sql
+CREATE TABLE NetworkLog (
+    LogID        BIGINT PRIMARY KEY,
+    DeviceID     INT,
+    EmployeeID   INT,
+    Timestamp    DATETIME,
+    DataUsageMB  FLOAT,
+    LatencyMS    INT,
+    AccessType   VARCHAR(50),   -- VPN, Internal, External
+    Status       VARCHAR(20),   -- Success, Failed
+    FOREIGN KEY (DeviceID)   REFERENCES Device(DeviceID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID)
+);
+```
+</details>
+
+<details>
+<summary><b>📋 Incident</b> — Downtime & security events</summary>
+
+```sql
+CREATE TABLE Incident (
+    IncidentID   INT PRIMARY KEY,
+    DeviceID     INT,
+    IncidentType VARCHAR(50),   -- Downtime, Security Breach
+    StartTime    DATETIME,
+    EndTime      DATETIME,
+    Severity     VARCHAR(20),   -- High, Medium, Low
+    FOREIGN KEY (DeviceID) REFERENCES Device(DeviceID)
+);
+```
+</details>
+
+<details>
+<summary><b>📋 BandwidthUsage</b> — Zone-level daily bandwidth</summary>
+
+```sql
+CREATE TABLE BandwidthUsage (
+    UsageID      INT PRIMARY KEY,
+    ZoneID       INT,
+    Date         DATE,
+    TotalUsageGB FLOAT,
+    PeakUsageGB  FLOAT,
+    FOREIGN KEY (ZoneID) REFERENCES Zone(ZoneID)
+);
+```
+</details>
+
+---
+
+## 📊 KPI Metrics
+
+> All KPIs are computed directly in SQL — no external tools required.
+
+### 🔵 Core Network Performance
+
+| KPI | Query | Target |
+|---|---|---|
+| Average Latency | `SELECT AVG(LatencyMS) FROM NetworkLog` | **< 100 ms** |
+| Network Availability | `100 - (downtime_minutes / 1440) * 100` | **99.9%+** |
+| Packet Success Rate | `SUCCESS_COUNT / TOTAL * 100` | **> 98%** |
+| Avg Bandwidth Usage | `SELECT AVG(TotalUsageGB) FROM BandwidthUsage` | Capacity planning |
+| Peak Bandwidth | `SELECT MAX(PeakUsageGB) FROM BandwidthUsage` | Overload detection |
+
+### 🟡 Incident & Reliability
+
+| KPI | Formula | Goal |
+|---|---|---|
+| **MTTR** | `AVG(TIMESTAMPDIFF(MINUTE, StartTime, EndTime))` | Lower = better |
+| **MTBF** | `AVG(gap between incident EndTime → next StartTime)` | Higher = better |
+| High Severity Rate | `High incidents / Total incidents * 100` | Minimize |
+| Incident Count | `COUNT(*) FROM Incident` | Track trends |
+
+### 🟣 User Behavior
+
+```sql
+-- Failed Login Rate
+SELECT (COUNT(CASE WHEN Status='Failed' THEN 1 END) * 100.0) / COUNT(*) FROM NetworkLog;
+
+-- VPN Usage Ratio
+SELECT (COUNT(CASE WHEN AccessType='VPN' THEN 1 END) * 100.0) / COUNT(*) FROM NetworkLog;
+
+-- Off-Hours Access (midnight–6AM)
+SELECT (COUNT(*) * 100.0) / (SELECT COUNT(*) FROM NetworkLog)
+FROM NetworkLog WHERE HOUR(Timestamp) BETWEEN 0 AND 6;
+```
+
+### 🔴 Security
+
+```sql
+-- Suspicious External Failures
+SELECT (COUNT(*) * 100.0) / (SELECT COUNT(*) FROM NetworkLog)
+FROM NetworkLog WHERE Status='Failed' AND AccessType='External';
+
+-- Data Spike Events (> 1000 MB)
+SELECT COUNT(*) FROM NetworkLog WHERE DataUsageMB > 1000;
+
+-- Multi-device Risk (> 3 devices per employee)
+SELECT EmployeeID, COUNT(DISTINCT DeviceID)
+FROM NetworkLog GROUP BY EmployeeID HAVING COUNT(DISTINCT DeviceID) > 3;
+```
+
+---
+
+## 🔍 Query Categories
+
+### Category 1 — Basic SELECT *(Q1–Q20)*
+
+Foundational queries for day-to-day operational lookups.
+
+```sql
+-- Active devices
+SELECT * FROM Device WHERE Status = 'Active';
+
+-- High severity incidents
+SELECT * FROM Incident WHERE Severity = 'High';
+
+-- High data usage sessions
+SELECT * FROM NetworkLog WHERE DataUsageMB > 1000;
+
+-- VPN access logs
+SELECT * FROM NetworkLog WHERE AccessType = 'VPN';
+```
+
+---
+
+### Category 2 — JOIN Queries *(Q21–Q40)*
+
+Multi-table joins for enriched reporting across the full schema.
+
+```sql
+-- Employee, Device & Zone per network activity
+SELECT e.Name, d.DeviceType, z.ZoneName, n.AccessType, n.Status
+FROM NetworkLog n
+JOIN Employee e ON n.EmployeeID = e.EmployeeID
+JOIN Device   d ON n.DeviceID   = d.DeviceID
+JOIN Zone     z ON d.ZoneID     = z.ZoneID;
+
+-- Devices with zero log activity (LEFT JOIN)
+SELECT d.DeviceID, d.DeviceType, COUNT(n.LogID) AS LogCount
+FROM Device d
+LEFT JOIN NetworkLog n ON d.DeviceID = n.DeviceID
+GROUP BY d.DeviceID;
+```
+
+---
+
+### Category 3 — Aggregation Queries *(Q41–Q60)*
+
+Statistical summaries with `GROUP BY`, `HAVING`, and aggregate functions.
+
+```sql
+-- Top 5 data consumers
+SELECT EmployeeID, SUM(DataUsageMB) AS TotalUsage
+FROM NetworkLog
+GROUP BY EmployeeID
+ORDER BY TotalUsage DESC LIMIT 5;
+
+-- Devices with avg latency > 150ms
+SELECT DeviceID, AVG(LatencyMS) AS AvgLatency
+FROM NetworkLog
+GROUP BY DeviceID
+HAVING AVG(LatencyMS) > 150;
+
+-- Daily usage trend
+SELECT DATE(Timestamp), SUM(DataUsageMB)
+FROM NetworkLog
+GROUP BY DATE(Timestamp);
+```
+
+---
+
+### Category 4 — Window Function Queries *(Q61–Q80)*
+
+Advanced analytics without collapsing rows.
+
+```sql
+-- ROW_NUMBER / RANK / DENSE_RANK
+SELECT LogID, DataUsageMB,
+    ROW_NUMBER()  OVER (ORDER BY DataUsageMB DESC) AS RowNum,
+    RANK()        OVER (ORDER BY DataUsageMB DESC) AS Rank,
+    DENSE_RANK()  OVER (ORDER BY DataUsageMB DESC) AS DenseRank
+FROM NetworkLog;
+
+-- LAG / LEAD — session-to-session comparison
+SELECT EmployeeID, DataUsageMB,
+    LAG(DataUsageMB)  OVER (PARTITION BY EmployeeID ORDER BY Timestamp) AS PrevUsage,
+    LEAD(DataUsageMB) OVER (PARTITION BY EmployeeID ORDER BY Timestamp) AS NextUsage
+FROM NetworkLog;
+
+-- Cumulative running total per device
+SELECT DeviceID, DataUsageMB,
+    SUM(DataUsageMB) OVER (PARTITION BY DeviceID ORDER BY Timestamp) AS RunningTotal
+FROM NetworkLog;
+
+-- NTILE quartiles
+SELECT LogID, DataUsageMB,
+    NTILE(4) OVER (ORDER BY DataUsageMB DESC) AS Quartile
+FROM NetworkLog;
+```
+
+---
+
+### Category 5 — Security & Anomaly Detection *(Q81–Q100)*
+
+Threat detection and fraud pattern identification.
+
+```sql
+-- Spike detection via subquery
+SELECT * FROM NetworkLog
+WHERE DataUsageMB > (SELECT AVG(DataUsageMB) * 3 FROM NetworkLog);
+
+-- Night-time access (0–5AM)
+SELECT * FROM NetworkLog WHERE HOUR(Timestamp) BETWEEN 0 AND 5;
+
+-- Inactive device still generating logs
+SELECT d.DeviceID FROM Device d
+JOIN NetworkLog n ON d.DeviceID = n.DeviceID
+WHERE d.Status = 'Inactive';
+
+-- High peak bandwidth anomaly
+SELECT * FROM BandwidthUsage
+WHERE PeakUsageGB > (SELECT AVG(PeakUsageGB) * 2 FROM BandwidthUsage);
+
+-- Long downtime incidents (> 5 hours)
+SELECT *, TIMESTAMPDIFF(HOUR, StartTime, EndTime) AS DurationHours
+FROM Incident
+WHERE TIMESTAMPDIFF(HOUR, StartTime, EndTime) > 5;
+```
+
+---
+
+## 🛡️ Security & Anomaly Detection
+
+The system implements **8 distinct security detection patterns**:
+
+```
+┌─────────────────────────────────┬────────┬──────────────────────────────────────┐
+│ Pattern                         │ Risk   │ Detection Logic                      │
+├─────────────────────────────────┼────────┼──────────────────────────────────────┤
+│ Multiple Failed Logins          │ HIGH   │ HAVING COUNT(*) > 5 per employee     │
+│ Data Spike Anomaly              │ HIGH   │ DataUsageMB > AVG * 3 (subquery)     │
+│ External + High Usage           │ HIGH   │ AccessType='External' AND MB > 500   │
+│ Off-Hours Access (0–5AM)        │ MEDIUM │ HOUR(Timestamp) BETWEEN 0 AND 5      │
+│ Multi-Device Access             │ MEDIUM │ COUNT(DISTINCT DeviceID) > 3         │
+│ Inactive Device with Logs       │ MEDIUM │ Status='Inactive' JOIN NetworkLog    │
+│ High Latency + Success          │ LOW    │ LatencyMS > 300 AND Status='Success' │
+│ Peak Bandwidth Overload         │ LOW    │ PeakUsageGB > AVG * 2 (subquery)     │
+└─────────────────────────────────┴────────┴──────────────────────────────────────┘
+```
+
+---
+
+## 🗂️ Project Structure
+
+```
+NetworkDB/
+│
+├── 📄 database_and_tables.sql    ← CREATE DATABASE + all 6 table definitions
+│
+├── 📄 queries.sql                ← 100 analytical queries (Q1–Q100)
+│   ├── Q1–Q20   Basic SELECT     (filtering, sorting, simple lookups)
+│   ├── Q21–Q40  JOIN Queries     (multi-table, LEFT JOIN, 4-table joins)
+│   ├── Q41–Q60  Aggregation      (GROUP BY, HAVING, aggregate functions)
+│   ├── Q61–Q80  Window Functions (RANK, LAG, NTILE, running totals)
+│   └── Q81–Q100 Security/Anomaly (fraud detection, spike analysis)
+│
+├── 📄 kpis.sql                   ← 20+ KPI queries for dashboards
+│   ├── Network Performance KPIs  (latency, availability, success rate)
+│   ├── Incident & Reliability    (MTTR, MTBF, severity rates)
+│   ├── User Behavior KPIs        (VPN ratio, off-hours, top consumers)
+│   ├── Zone-Level KPIs           (per-zone latency, usage, incidents)
+│   ├── Device Performance KPIs   (utilization, failure rate, high latency)
+│   └── Security & Fraud KPIs     (suspicious activity, multi-device risk)
+│
+└── 📊 Table_connection_diagram.png  ← Visual ER diagram
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- MySQL 8.0+ (or MariaDB 10.5+)
+- MySQL Workbench / DBeaver / CLI
+
+### Setup
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/networkdb.git
+cd networkdb
+
+# 2. Create the database and tables
+mysql -u root -p < database_and_tables.sql
+
+# 3. (Optional) Load sample data
+mysql -u root -p NetworkDb < sample_data.sql
+
+# 4. Run KPI queries
+mysql -u root -p NetworkDb < kpis.sql
+
+# 5. Run analytical queries
+mysql -u root -p NetworkDb < queries.sql
+```
+
+### Quick Start — Single Query
+
+```sql
+USE NetworkDb;
+
+-- Check network health at a glance
+SELECT
+    ROUND(AVG(LatencyMS), 2)                                        AS Avg_Latency_ms,
+    ROUND(COUNT(CASE WHEN Status='Success' THEN 1 END) * 100.0
+          / COUNT(*), 2)                                            AS Success_Rate_Pct,
+    COUNT(CASE WHEN Status='Failed' THEN 1 END)                     AS Failed_Requests,
+    COUNT(CASE WHEN AccessType='VPN' THEN 1 END)                    AS VPN_Sessions,
+    COUNT(CASE WHEN HOUR(Timestamp) BETWEEN 0 AND 5 THEN 1 END)     AS OffHours_Access
+FROM NetworkLog;
+```
+
+---
+
+## 📈 Sample Query Results
+
+**Zone-wise Average Latency**
+
+| ZoneName | AvgLatencyMS |
+|---|---|
+| Zone C   | 63.88 ms |
+| Zone A   | 72.45 ms |
+| Zone B   | 95.12 ms |
+
+**Top 5 Data Consumers**
+
+| EmployeeID | TotalUsage (MB) |
+|---|---|
+| E001 | 52,400.5 |
+| E010 | 48,300.2 |
+| E022 | 45,100.0 |
+| E007 | 39,800.8 |
+| E014 | 36,500.3 |
+
+**Incident Count by Zone**
+
+| ZoneName | IncidentCount |
+|---|---|
+| Zone A   | 18 |
+| Zone B   | 12 |
+| Zone C   | 7  |
+
+---
+
+## 🧠 SQL Concepts Covered
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  BASIC          │  SELECT · WHERE · LIKE · IN · BETWEEN · ORDER BY · LIMIT   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  JOINS          │  INNER JOIN · LEFT JOIN · Multi-table (4-way) JOIN          │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  AGGREGATION    │  COUNT · SUM · AVG · MIN · MAX · GROUP BY · HAVING          │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  SUBQUERIES     │  WHERE subquery · FROM subquery · Correlated subquery        │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  DATE/TIME      │  TIMESTAMPDIFF · HOUR() · DATE() · CURDATE()                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  WINDOW FNS     │  ROW_NUMBER · RANK · DENSE_RANK · LAG · LEAD               │
+│                 │  FIRST_VALUE · LAST_VALUE · NTILE · PERCENT_RANK · CUME_DIST│
+│                 │  SUM/AVG/COUNT/MAX/MIN OVER (PARTITION BY ... ORDER BY ...)  │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! To add new queries or KPIs:
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/new-analytics`
+3. Add your query to the appropriate `.sql` file with a comment header:
+   ```sql
+   -- Q101. <Title>
+   -- Purpose: <Description>
+   SELECT ...
+   ```
+4. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+**Built with MySQL · Designed for Enterprise Network Operations**
+
+⭐ Star this repo if you found it useful!
+
+</div>

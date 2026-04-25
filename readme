@@ -1,91 +1,111 @@
-# 🚀 IT Industry Sales Performance — SQL Analytics Project
+### 🚀 IT Industry Sales Performance — SQL Analytics Project
 
 <div align="center">
 
-### 📊 From Raw Data → Business Decisions
+### 📊 Turning Raw Data → Business Decisions
 
-[![MySQL](https://img.shields.io/badge/MySQL-8.0-00C2E0?style=for-the-badge\&logo=mysql\&logoColor=white)]()
-[![SQL Queries](https://img.shields.io/badge/SQL-50%2B_Queries-0D1B2A?style=for-the-badge)]()
-[![Tables](https://img.shields.io/badge/Tables-7-117A65?style=for-the-badge)]()
-[![Business Cases](https://img.shields.io/badge/Case_Studies-5-6A1B9A?style=for-the-badge)]()
+<img src="https://img.shields.io/badge/MySQL-8.0-00C2E0?style=for-the-badge&logo=mysql&logoColor=white" />
+<img src="https://img.shields.io/badge/SQL-50%2B_Queries-0D1B2A?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Tables-7-117A65?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Case_Studies-5-6A1B9A?style=for-the-badge" />
+
+<br/>
+
+<img src="assets/premium-dashboard-preview.gif" width="900" alt="Dashboard Preview"/>
 
 </div>
+
+---
+
+## 🔥 Why This Project Matters
+
+Most SQL projects stop at queries.
+
+**This one goes further → it connects data to business impact.**
+
+* 📈 Identify revenue drivers
+* 🎯 Optimize marketing channels
+* ⚠️ Detect financial risks
+* 👥 Evaluate sales performance
 
 ---
 
 ## 📌 Project Overview
 
-This project is a **real-world SQL analytics case study** focused on IT industry sales performance. It demonstrates how raw transactional data can be transformed into **actionable business insights** using SQL.
+A **real-world SQL analytics project** simulating an IT company’s sales ecosystem.
 
-💡 Built with a strong focus on:
-
-* Business problem solving
-* Real-world datasets
-* Interview-level SQL concepts
+It transforms raw transactional data into **insights that decision-makers can act on.**
 
 ---
 
-## 📸 Project Highlights
-
-✔️ 50+ SQL Queries (Basic → Advanced)
-✔️ 7 Relational Tables (Fully Connected Schema)
-✔️ Advanced JOINs, CTEs, Window Functions
-✔️ 5 Real Business Case Studies
-✔️ Revenue, Sales, Marketing & Customer Insights
-
----
-
-## 🎥 Demo / Dashboard Preview
+## 💡 Key Insights (Business Impact)
 
 <div align="center">
 
-<!-- Replace the src below with your actual GIF file path in the repo -->
-
-<img src="https://raw.githubusercontent.com/s2097p-de/IT-Industry-Sales-Performance/main/assets/dashboard-demo.gif" alt="SQL Dashboard Demo" width="800"/>
+| Insight                              | Impact                       |
+| ------------------------------------ | ---------------------------- |
+| 📈 65% revenue from repeat customers | Focus on retention           |
+| 🎯 Referrals outperform LinkedIn 3X  | Reallocate marketing budget  |
+| ⚠️ ₹2.3 Cr unpaid orders             | Improve collections strategy |
+| 📉 Bottom 20% → only 8% revenue      | Sales team optimization      |
 
 </div>
 
-**What this shows:**
+---
 
-* Interactive KPI dashboard (Revenue, Orders, Conversion)
-* Monthly trend analysis with MoM change
-* Top customers & products by revenue
-* Sales performance by employee & region
+## 📸 Project Assets
 
-> Tip: If the GIF doesn’t load on GitHub, ensure the file exists at `assets/dashboard-demo.gif` or update the path accordingly.
+<div align="center">
+
+<img src="assets/er-diagram.png" width="400" />
+<img src="assets/report-snapshot.png" width="400" />
+
+</div>
 
 ---
 
-## 💡 Key Insights Generated
+## 🧩 Dataset Architecture
 
-* 📈 **65% revenue from repeat customers** → Strong retention impact
-* 🎯 **Referral channel = 3X better conversion than LinkedIn**
-* ⚠️ **₹2.3 Cr revenue at risk** (unpaid orders)
-* 📉 **Bottom 20% sales team → only 8% revenue**
-* 📊 Identified exact **months of revenue drop & recovery**
+```text
+Customers ──┐
+            ├── Sales_Orders ── Order_Details ── Products
+Employees ──┘
+            └── Payments
 
----
-
-## 🗂️ Dataset Structure (7 Tables)
-
-* Customers
-* Sales_Orders
-* Order_Details
-* Products
-* Sales_Employees
-* Payments
-* Leads
+Leads (Marketing Funnel)
+```
 
 ---
 
-## 🔍 SQL Concepts Covered
+## 🔍 SQL Skills Demonstrated
 
-✔️ SELECT, WHERE, GROUP BY, HAVING
-✔️ INNER JOIN, LEFT JOIN, Multi-table JOIN
-✔️ Window Functions (RANK, ROW_NUMBER, NTILE)
-✔️ Subqueries & Correlated Queries
-✔️ CTEs (WITH clause)
-✔️ Business KPI Calculations
+* 🧠 Advanced JOINs (multi-table analysis)
+* 📊 Window Functions (RANK, NTILE, ROW_NUMBER)
+* 🔁 CTEs & Subqueries
+* 📈 KPI Calculations
+* 📉 Trend Analysis
+
+---
+
+## 🧪 Sample Query
+
+```sql
+SELECT 
+    CustomerID,
+    SUM(TotalAmount) AS Revenue,
+    RANK() OVER (ORDER BY SUM(TotalAmount) DESC) AS Rank
+FROM Sales_Orders
+GROUP BY CustomerID;
+```
+
+---
+
+## 🎯 Use Cases
+
+✔️ Data Analyst Portfolio
+✔️ SQL Interview Preparation
+✔️ Business Analytics Practice
+✔️ Dashboard Building Projects
 
 ---
 
@@ -95,20 +115,31 @@ This project is a **real-world SQL analytics case study** focused on IT industry
 
 ---
 
-## 🎯 Why This Project Stands Out
+## ⚡ What Makes This Stand Out
 
-Unlike basic SQL projects, this one focuses on:
-
-* Solving **real business problems**
-* Generating **decision-making insights**
-* Simulating **industry-level analytics workflows**
-
----
-
-## 🤝 Let’s Connect
-
-If you're into **Data Analytics / SQL / Business Intelligence**, feel free to connect and share feedback 🚀
+* Not just queries → **business storytelling**
+* Real-world scenarios → **practical relevance**
+* Clean structure → **easy to understand**
+* Ready for dashboards → **BI integration**
 
 ---
 
-#SQL #DataAnalytics #MySQL #BusinessIntelligence #PortfolioProject
+## 🚀 Next Improvements
+
+* 📊 Power BI Dashboard Integration
+* 📉 Time-series forecasting
+* 🤖 ML-based sales prediction
+
+---
+
+## 🤝 Connect
+
+If you’re into **Data Analytics / SQL / BI**, let’s connect 🚀
+
+---
+
+<div align="center">
+
+⭐ If you like this project, give it a star!
+
+</div>

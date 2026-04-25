@@ -1,145 +1,75 @@
-### 🚀 IT Industry Sales Performance — SQL Analytics Project
+🚀 IT Industry Sales Performance — SQL Analytics Project
+📊 Turning Raw Data → Business Decisions
+   
 
-<div align="center">
 
-### 📊 Turning Raw Data → Business Decisions
-
-<img src="https://img.shields.io/badge/MySQL-8.0-00C2E0?style=for-the-badge&logo=mysql&logoColor=white" />
-<img src="https://img.shields.io/badge/SQL-50%2B_Queries-0D1B2A?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Tables-7-117A65?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Case_Studies-5-6A1B9A?style=for-the-badge" />
-
-<br/>
-
-<img src="assets/premium-dashboard-preview.gif" width="900" alt="Dashboard Preview"/>
-
-</div>
-
----
-
-## 🔥 Why This Project Matters
-
+________________________________________
+🔥 Why This Project Matters
 Most SQL projects stop at queries.
-
-**This one goes further → it connects data to business impact.**
-
-* 📈 Identify revenue drivers
-* 🎯 Optimize marketing channels
-* ⚠️ Detect financial risks
-* 👥 Evaluate sales performance
-
----
-
-## 📌 Project Overview
-
-A **real-world SQL analytics project** simulating an IT company’s sales ecosystem.
-
-It transforms raw transactional data into **insights that decision-makers can act on.**
-
----
-
-## 💡 Key Insights (Business Impact)
-
-<div align="center">
-
-| Insight                              | Impact                       |
-| ------------------------------------ | ---------------------------- |
-| 📈 65% revenue from repeat customers | Focus on retention           |
-| 🎯 Referrals outperform LinkedIn 3X  | Reallocate marketing budget  |
-| ⚠️ ₹2.3 Cr unpaid orders             | Improve collections strategy |
-| 📉 Bottom 20% → only 8% revenue      | Sales team optimization      |
-
-</div>
-
----
-
-## 📸 Project Assets
-
-<div align="center">
-
-<img src="assets/er-diagram.png" width="400" />
-<img src="assets/report-snapshot.png" width="400" />
-
-</div>
-
----
-
-## 🧩 Dataset Architecture
-
-```text
+This one goes further → it connects data to business impact.
+•	📈 Identify revenue drivers
+•	🎯 Optimize marketing channels
+•	⚠️ Detect financial risks
+•	👥 Evaluate sales performance
+________________________________________
+📌 Project Overview
+A real-world SQL analytics project simulating an IT company’s sales ecosystem.
+It transforms raw transactional data into insights that decision-makers can act on.
+________________________________________
+💡 Key Insights (Business Impact)
+Insight	Impact
+📈 65% revenue from repeat customers	Focus on retention
+🎯 Referrals outperform LinkedIn 3X	Reallocate marketing budget
+⚠️ ₹2.3 Cr unpaid orders	Improve collections strategy
+📉 Bottom 20% → only 8% revenue	Sales team optimization
+________________________________________
+📸 Project Assets
+ 
+________________________________________
+🧩 Dataset Architecture
 Customers ──┐
             ├── Sales_Orders ── Order_Details ── Products
 Employees ──┘
             └── Payments
 
 Leads (Marketing Funnel)
-```
-
----
-
-## 🔍 SQL Skills Demonstrated
-
-* 🧠 Advanced JOINs (multi-table analysis)
-* 📊 Window Functions (RANK, NTILE, ROW_NUMBER)
-* 🔁 CTEs & Subqueries
-* 📈 KPI Calculations
-* 📉 Trend Analysis
-
----
-
-## 🧪 Sample Query
-
-```sql
+________________________________________
+🔍 SQL Skills Demonstrated
+•	🧠 Advanced JOINs (multi-table analysis)
+•	📊 Window Functions (RANK, NTILE, ROW_NUMBER)
+•	🔁 CTEs & Subqueries
+•	📈 KPI Calculations
+•	📉 Trend Analysis
+________________________________________
+🧪 Sample Query
 SELECT 
     CustomerID,
     SUM(TotalAmount) AS Revenue,
     RANK() OVER (ORDER BY SUM(TotalAmount) DESC) AS Rank
 FROM Sales_Orders
 GROUP BY CustomerID;
-```
-
----
-
-## 🎯 Use Cases
-
+________________________________________
+🎯 Use Cases
 ✔️ Data Analyst Portfolio
 ✔️ SQL Interview Preparation
 ✔️ Business Analytics Practice
 ✔️ Dashboard Building Projects
-
----
-
-## 💻 Project Link
-
-👉 [https://github.com/s2097p-de/IT-Industry-Sales-Performance](https://github.com/s2097p-de/IT-Industry-Sales-Performance)
-
----
-
-## ⚡ What Makes This Stand Out
-
-* Not just queries → **business storytelling**
-* Real-world scenarios → **practical relevance**
-* Clean structure → **easy to understand**
-* Ready for dashboards → **BI integration**
-
----
-
-## 🚀 Next Improvements
-
-* 📊 Power BI Dashboard Integration
-* 📉 Time-series forecasting
-* 🤖 ML-based sales prediction
-
----
-
-## 🤝 Connect
-
-If you’re into **Data Analytics / SQL / BI**, let’s connect 🚀
-
----
-
-<div align="center">
-
+________________________________________
+💻 Project Link
+👉 https://github.com/s2097p-de/IT-Industry-Sales-Performance
+________________________________________
+⚡ What Makes This Stand Out
+•	Not just queries → business storytelling
+•	Real-world scenarios → practical relevance
+•	Clean structure → easy to understand
+•	Ready for dashboards → BI integration
+________________________________________
+🚀 Next Improvements
+•	📊 Power BI Dashboard Integration
+•	📉 Time-series forecasting
+•	🤖 ML-based sales prediction
+________________________________________
+🤝 Connect
+If you’re into Data Analytics / SQL / BI, let’s connect 🚀
+________________________________________
 ⭐ If you like this project, give it a star!
-
-</div>
